@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MeatDataSink/MeatDataSink.iml" filepath="$PROJECT_DIR$/MeatDataSink/MeatDataSink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/meatworldavatar.iml" filepath="$PROJECT_DIR$/meatworldavatar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/notifier/notifier.iml" filepath="$PROJECT_DIR$/notifier/notifier.iml" />
+    </modules>
+  </component>
+</project>
+

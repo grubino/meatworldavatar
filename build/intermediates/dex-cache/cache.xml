@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/home/greg/AndroidStudioProjects/meatworldavatar/notifier/build/intermediates/pre-dexed/debug/classes-ce169b0c51adf5951bfbb30a7deca0b3952a7747.jar"
+        jar="/home/greg/AndroidStudioProjects/meatworldavatar/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/19.0.1/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="b1701c49371231e0423b7588539f24bdab485019"/>
+    <item
+        dex="/home/greg/AndroidStudioProjects/meatworldavatar/notifier/build/intermediates/pre-dexed/debug/classes-854a35b654bd29220a28a30d93be767cf4cde2e2.jar"
+        jar="/home/greg/AndroidStudioProjects/meatworldavatar/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/home/greg/AndroidStudioProjects/meatworldavatar/notifier/build/intermediates/pre-dexed/debug/support-v4-19.1.0-0ff2fb23d52a24e3de7b024a057ba6ddc66b238e.jar"
+        jar="/home/greg/downloads/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+
+</pre-dex-items>

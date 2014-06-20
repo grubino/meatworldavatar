@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Meat World Avatar</string>
+    <string name="notification_mw_data_sink_started">meat world data sink started</string>
+    <string name="notification_mw_data_sink_stopped">meat world data sink stopped</string>
+    <string name="title_meatworldaspect_detail">Meat World Aspect</string>
+
+</resources>
