@@ -22,10 +22,10 @@ import com.kramerica.meatworldavatar.meatdomain.EventDao;
 import com.kramerica.meatworldavatar.meatdomain.RelevanceDao;
 import com.kramerica.meatworldavatar.meatdomain.HabitDao;
 import com.kramerica.meatworldavatar.meatdomain.DaoSession;
+import com.kramerica.meatworldavatar.notifier.dummy.NotificationIndex;
 
+import java.util.EnumMap;
 import java.util.Map;
-
-import de.greenrobot.dao.internal.DaoConfig;
 
 public class MeatWorldDataSink extends Service {
 
@@ -41,8 +41,9 @@ public class MeatWorldDataSink extends Service {
     private RelevanceDao mRelevanceDao;
     private Cursor cursor;
 
-    private int notification = R.string.notification_mw_data_sink_started;
     private IBinder mBinder = new MWDataSinkBinder();
+
+    private EnumMap<NotificationIndex, Notification> mNotificationPool;
 
     public class MWDataSinkBinder extends Binder {
         MeatWorldDataSink getService() {
@@ -65,12 +66,24 @@ public class MeatWorldDataSink extends Service {
         public void run() {
             boolean stop = false;
             while(!stop) {
+                try {
+                    Thread.sleep(100, 0);
+                } catch (final InterruptedException e) {
+                    MeatWorldDataSink.this.mNM.notify(
+                            NotificationIndex.INTERRUPT_NOTIFICATION.ordinal(),
+                            MeatWorldDataSink.this.mNotificationPool.get(NotificationIndex.INTERRUPT_NOTIFICATION));
+                }
             }
         }
 
         @Override
-        public void onSensorChanged(SensorEvent sensorEvent) {
-
+        public void onSensorChanged(SensorEvent event) {
+            switch(event.sensor.getType()) {
+                case Sensor.TYPE_ACCELEROMETER:
+                    break;
+                default:
+                    break;
+            }
         }
 
         @Override
@@ -92,22 +105,28 @@ public class MeatWorldDataSink extends Service {
         mEventDao = mDBSession.getEventDao();
         mRelevanceDao = mDBSession.getRelevanceDao();
 
-
-
+        createNotifications();
         showStartupNotification();
     }
 
+    private void createNotifications() {
+        for (NotificationIndex i: NotificationIndex.values()) {
+            CharSequence text = i.message();
+            Notification n =
+                    new Notification.Builder(getApplicationContext())
+                            .setContentTitle(text)
+                            .setContentText(text)
+                            .setSmallIcon(R.drawable.ic_launcher)
+                            .build();
+            mNotificationPool.put(i, n);
+        }
+    }
 
     private void showStartupNotification() {
         CharSequence text = getText(R.string.notification_mw_data_sink_started);
-        PendingIntent i = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), PendingIntent.FLAG_NO_CREATE);
-        Notification n =
-                new Notification.Builder(getApplicationContext())
-                        .setContentTitle(text)
-                        .setContentText(text)
-                        .setSmallIcon(R.drawable.ic_launcher)
-                        .build();
-        mNM.notify(notification, n);
+        mNM.notify(
+                NotificationIndex.STARTUP_NOTIFICATION.ordinal(),
+                mNotificationPool.get(NotificationIndex.STARTUP_NOTIFICATION));
     }
 
     @Override
@@ -118,7 +137,7 @@ public class MeatWorldDataSink extends Service {
 
     @Override
     public void onDestroy() {
-        mNM.cancel(notification);
+        mNM.cancel(NotificationIndex.STARTUP_NOTIFICATION.ordinal());
         Toast.makeText(this, R.string.notification_mw_data_sink_stopped, Toast.LENGTH_SHORT);
     }
 

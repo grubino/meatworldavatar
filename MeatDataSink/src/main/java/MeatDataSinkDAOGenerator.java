@@ -25,10 +25,20 @@ public class MeatDataSinkDAOGenerator {
         habit.addIntProperty("dayOfMonth");
         habit.addIntProperty("dayOfYear");
 
+        Entity acceleration = schema.addEntity("Acceleration");
+        acceleration.addIdProperty();
+        acceleration.addDateProperty("timestamp").indexDesc("accelTime", true);
+        acceleration.addFloatProperty("x");
+        acceleration.addFloatProperty("y");
+        acceleration.addFloatProperty("z");
+        Property associatedEvent = acceleration.addLongProperty("eventId").getProperty();
+
         Entity event = schema.addEntity("Event");
-        event.addIdProperty();
+        event.addIdProperty().getProperty();
+        Property eventAvatar = event.addLongProperty("avatarId").getProperty();
         event.addDateProperty("time");
-        event.addStringProperty("description");
+        event.addIntProperty("sensor_type");
+        ToMany eventAssociation = event.addToMany(acceleration, associatedEvent);
 
         Entity relevance = schema.addEntity("Relevance");
         relevance.addIdProperty();
@@ -48,6 +58,7 @@ public class MeatDataSinkDAOGenerator {
         avatar.addByteProperty("gender");
         ToMany avatarToHabit = avatar.addToMany(habit, avatarId);
         ToMany avatarRelevance = avatar.addToMany(relevance, relevantAvatarId);
+        ToMany avatarEvents = avatar.addToMany(event, eventAvatar);
 
         new DaoGenerator().generateAll(schema, ".");
 
